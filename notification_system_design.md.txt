@@ -1,0 +1,28 @@
+# Notification System Design
+
+## Stage 1: Notification API Endpoints
+The notification system is designed to provide real-time updates to students regarding maintenance schedules.
+
+* **POST /api/notify**
+    * **Purpose:** Trigger a new notification.
+    * **Request Body:** `{ "studentId": "string", "message": "string" }`
+    * **Response:** `{ "status": "success", "notificationId": "uuid" }`
+
+* **GET /api/notifications/:studentId**
+    * **Purpose:** Retrieve the notification history for a specific student.
+    * **Response:** `Array` of notification objects including `message`, `status`, and `timestamp`.
+
+## Stage 2: Database Strategy
+* **Database Choice:** PostgreSQL.
+* **Reasoning:** PostgreSQL is chosen for its strict ACID compliance, ensuring that transaction logs are never lost during high-concurrency events. 
+* **Schema Design:** * `notifications` table:
+        * `id` (Primary Key, UUID)
+        * `studentId` (Indexed, Varchar)
+        * `message` (Text)
+        * `status` (Enum: 'sent', 'delivered', 'failed')
+        * `timestamp` (Timestamp)
+* **Performance Optimization:** * A B-Tree index is applied to the `studentId` column. This reduces lookup time for `GET` requests to $O(\log n)$, ensuring the system remains responsive even with over 50,000 logs.
+
+## Stage 3: Scalability & Reliability
+* **Async Processing:** Notifications are queued using a message broker (e.g., Redis or RabbitMQ) to decouple the API request from the actual delivery process.
+* **Redundancy:** Database replication is implemented to ensure high availability during service maintenance.
