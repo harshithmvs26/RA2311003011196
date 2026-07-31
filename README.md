@@ -194,17 +194,3 @@ Contributions are welcome!
 Please ensure your code follows clean coding practices and includes proper documentation.
 
 ---
-
-# 📄 License
-
-This project is licensed under the **MIT License**.
-
-You are free to use, modify, and distribute this project under the terms of the license.
-
----
-
-# ⭐ Support
-
-If you found this project helpful, consider giving it a **⭐ Star** on GitHub. It motivates further development and helps others discover the project.
-
-Happy Coding! 🚀
